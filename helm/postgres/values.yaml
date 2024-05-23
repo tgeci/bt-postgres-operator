@@ -8,7 +8,7 @@
 ###########
 
 # Bitmarck specific settings
-clusterSize: medium
+clusterSize: small
 
 # name is the name of the cluster. This defaults to the name of the Helm
 # release.
@@ -40,7 +40,7 @@ postgresVersion: 16
 # monitoring enables the ability to monitor the Postgres cluster through a
 # metrics exporter that can be scraped by Prometheus. This defaults to the value
 # below.
-# monitoring: false
+monitoring: true
 
 ###################
 # Image Overrides #
@@ -271,6 +271,12 @@ postgresVersion: 16
 # pgBouncerConfig sets all of the pgBouncer portions of the spec except for
 # image. To set image, you need to set the "pgBouncer" setting.
 # pgBouncerConfig: {}
+#pgBouncerConfig:
+#  pgBouncer:
+#    config:
+#      global:
+#        default_pool_size: "50"
+#        max_client_conn: "1111" 
 
 #######################
 # Monitoring Settings #
@@ -288,7 +294,7 @@ postgresVersion: 16
 # metadata contains any metadata that should be applied to all PGO managed
 # objects in this Postgres cluster. This includes "annotations" and "labels" as
 # sub-keys.
-# metadata: {}
+#metadata: 
 
 # service customizes the Service that exposes the Postgres primary.
 # service: {}

@@ -129,7 +129,10 @@ spec:
               requests:
                 storage: {{ default "1Gi" .Values.backupsSize | quote }}
       {{- end }}
-  {{- if "dynamicClusterConfig.proxy.config" }}
+  {{- if .Values.pgBouncerConfig }}
+  proxy:
+  {{ toYaml .Values.pgBouncerConfig | indent 2 }}
+  {{- else if "dynamicClusterConfig.proxy.config" }}
   {{- include "dynamicClusterConfig.proxy.config" . | indent 2 }}
   {{- end }}
   {{- if .Values.patroni }}
