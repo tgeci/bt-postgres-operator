@@ -8,7 +8,7 @@ spec:
   postGISVersion: {{ quote .Values.postGISVersion }}
   {{- end }}
   {{- if .Values.imagePostgres }}
-  image: {{ .Values.imagePostgres | quote }}
+  image: {{ .Values.imagePostgres | quote }}f
   {{- end }}
   {{- if .Values.port }}
   port: {{ .Values.port }}
@@ -129,21 +129,14 @@ spec:
               requests:
                 storage: {{ default "1Gi" .Values.backupsSize | quote }}
       {{- end }}
-  {{- if or .Values.pgBouncerReplicas .Values.pgBouncerConfig }}
-  proxy:
-    pgBouncer:
-      {{- if .Values.imagePgBouncer }}
-      image: {{ .Values.imagePgBouncer | quote }}
-      {{- end }}
-      {{- if .Values.pgBouncerConfig }}
-{{ toYaml .Values.pgBouncerConfig | indent 6 }}
-      {{- else }}
-      replicas: {{ .Values.pgBouncerReplicas }}
-      {{- end }}
+  {{- if "dynamicClusterConfig.proxy.config" }}
+  {{- include "dynamicClusterConfig.proxy.config" . | indent 2 }}
   {{- end }}
   {{- if .Values.patroni }}
   patroni:
-{{ toYaml .Values.patroni | indent 4 }}
+  {{ toYaml .Values.patroni | indent 4 }}
+  {{- else if "dynamicClusterConfig.patroni" }}
+  {{- include "dynamicClusterConfig.patroni" . | indent 2 }}
   {{- end }}
   {{- if .Values.users }}
   users:
@@ -188,7 +181,7 @@ spec:
   {{- if .Values.shutdown }}
   shutdown: true
   {{- end }}
-  {{- if .Values.standby }}
+  {{- if .Values.standby }}f
   standby:
     enabled: {{ .Values.standby.enabled }}
     repoName: {{ .Values.standby.repoName }}

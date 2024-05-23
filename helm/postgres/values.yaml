@@ -7,6 +7,9 @@
 # General #
 ###########
 
+# Bitmarck specific settings
+clusterSize: medium
+
 # name is the name of the cluster. This defaults to the name of the Helm
 # release.
 # name: hippo
@@ -124,7 +127,7 @@ postgresVersion: 16
 
 # patroni lets you set the Patroni configuration for the Postgres cluster.
 # for example, to set up synchronous replication:
-# patroni:
+#patroni:
 #   dynamicConfiguration:
 #     synchronous_mode: true
 #     postgresql:
